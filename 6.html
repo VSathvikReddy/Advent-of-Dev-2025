@@ -1,0 +1,668 @@
+<!DOCTYPE html><html><head>
+      <title>AoD_day6</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\reube\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+<style>
+/* ---------- Dark theme (override) ---------- */
+html, body {
+  background: #0b1117 !important; /* page background */
+  color: #dbe9ff !important;      /* main text color */
+}
+
+/* links */
+html body a { color: #7fb7ff !important; }
+
+/* containers */
+html body[for=html-export] .markdown-preview {
+  left: 0 !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 2em !important;
+  width: auto !important;
+  max-width: 1000px !important;   /* change if you want wider/narrower content */
+}
+
+/* make code blocks dark and readable */
+.markdown-preview pre,
+.markdown-preview code,
+.markdown-preview pre>code {
+  background: #07121a !important;
+  color: #dbe9ff !important;
+  /* border: 1px solid #183044 !important; */
+  box-shadow: none !important;
+}
+
+/* inline code */
+html body code { background: #07121a !important; color: #dbe9ff !important; }
+
+/* blockquote */
+.markdown-preview blockquote {
+  background: #061722 !important;
+  color: #c7e6ff !important;
+  border-left-color: #135e82 !important;
+}
+
+/* tables */
+.markdown-preview table th,
+.markdown-preview table td {
+  border-color: #183044 !important;
+  color: #e6f3ff !important;
+}
+
+/* line numbers (if shown) */
+.markdown-preview pre.line-numbers .line-numbers-rows>span:before {
+  color: #6ea7d6 !important;
+}
+
+/* reduce contrast on sidebar if visible */
+.md-sidebar-toc {
+  background: rgba(0,0,0,0.06) !important;
+}
+
+/* ensure headings remain visible */
+.markdown-preview h1, .markdown-preview h2, .markdown-preview h3 {
+  color: #ffffff !important;
+}
+</style>
+<style>
+/* Make the markdown content full-width and responsive */
+html body[for=html-export] .markdown-preview {
+  position: relative !important;
+  left: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 2em !important;   /* adjust if you want more/less margin */
+  box-sizing: border-box !important;
+}
+
+/* Allow the entire page to stretch */
+html, body {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+</style>
+<style>
+/* Full page responsive width */
+html body[for=html-export] .markdown-preview {
+  position: relative !important;
+  left: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 2em !important;
+  box-sizing: border-box !important;
+}
+
+/* Global font */
+html, body {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #0b1117 !important; /* keep your dark theme */
+  color: #dbe9ff !important;
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  line-height: 1.6 !important;
+}
+
+/* Headings look better with semibold weight */
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+}
+
+/* Inline code */
+.markdown-preview code {
+  font-family: "Fira Code", "JetBrains Mono", "Consolas", monospace !important;
+  background: #07121a !important;
+  color: #dbe9ff !important;
+  padding: 2px 4px !important;
+  border-radius: 4px;
+}
+
+/* Code blocks */
+.markdown-preview pre,
+.markdown-preview pre > code {
+  font-family: "Fira Code", "JetBrains Mono", "Consolas", monospace !important;
+  background: #07121a !important;
+  color: #dbe9ff !important;
+  /* border: 1px solid #183044 !important; */
+  /* border-radius: 8px; */
+  /* padding: 1em !important; */
+  overflow-x: auto !important;
+}
+
+/* Blockquotes */
+.markdown-preview blockquote {
+  background: #061722 !important;
+  border-left: 4px solid #135e82 !important;
+  color: #c7e6ff !important;
+  padding: 0.8em 1em !important;
+  border-radius: 4px;
+}
+</style>
+<style>
+/* Code blocks (whole block has padding, lines do NOT) */
+.markdown-preview pre {
+  background: #07121a !important;
+  color: #dbe9ff !important;
+  border: 1px solid #183044 !important;
+  border-radius: 8px !important;
+  padding: 1em !important;         /* <-- padding around whole block */
+  overflow-x: auto !important;
+  margin: 1.2em 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Remove padding inside <pre><code> so lines don't have padding */
+.markdown-preview pre code {
+  background: none !important;     /* remove inner background */
+  padding: 0 !important;           /* <-- remove line-level padding */
+  margin: 0 !important;
+  border: none !important;
+  display: block !important;
+  font-family: "Fira Code", "JetBrains Mono", Consolas, monospace !important;
+  color: inherit !important;
+}
+
+/* Inline code (still padded) */
+.markdown-preview code:not(pre code) {
+  background: #07121a !important;
+  padding: 2px 4px !important;
+  border-radius: 4px !important;
+  font-family: "Fira Code", "JetBrains Mono", Consolas, monospace !important;
+}
+</style>
+<style>
+/* Make markdown --- lines thin and subtle */
+.markdown-preview hr {
+  border: none !important;
+  border-top: 1px solid #2a3a44 !important;  /* soft grey-blue */
+  margin: 1.5em 0 !important;
+  height: 0 !important;
+}
+/* --- INLINE CODE WITH GREYISH PATTERN --- */
+.markdown-preview code:not(pre code) {
+  background: repeating-linear-gradient(
+      45deg,
+      #0f1c27,
+      #0f1c27 4px,
+      #122330 4px,
+      #122330 8px
+    ) !important;
+  border: 1px solid #3a4a56 !important;
+  color: #e8f3ff !important; /* brighter */
+  padding: 2px 5px !important;
+  border-radius: 5px !important;
+  font-family: "Fira Code", "JetBrains Mono", Consolas, monospace !important;
+}
+
+/* --- CODE BLOCK TEXT MORE VISIBLE --- */
+.markdown-preview pre,
+.markdown-preview pre code {
+  color: #eef6ff !important; /* brighter contrast for dark bg */
+}
+
+/* --- MAKE <strong> AND <b> TEXT BRIGHT AGAINST DARK BG --- */
+.markdown-preview strong,
+.markdown-preview b {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+/* --- CLEAN INLINE CODE (PLAIN GREY) --- */
+.markdown-preview code:not(pre code) {
+  background: #2a3540 !important;   /* subtle plain grey */
+  border: 1px solid #3c4a57 !important;
+  color: #f0f6ff !important;        /* bright readable text */
+  padding: 2px 5px !important;
+  border-radius: 4px !important;
+  font-family: "Fira Code", "JetBrains Mono", Consolas, monospace !important;
+}
+
+/* --- CODE BLOCK FONT COLORS (HIGH CONTRAST SCHEME) --- */
+.markdown-preview pre,
+.markdown-preview pre code {
+  background: #07121a !important;
+
+  /* Brighter default text */
+  color: #f2f7ff !important;
+
+  /* Allow syntax highlighters to show contrast better */
+}
+
+/* --- FIX SPECIFIC TOKENS: punctuation, brackets, operators --- */
+.markdown-preview pre code span.token.punctuation,
+.markdown-preview pre code .punctuation {
+  color: #d0e2ff !important;   /* visible light-blue */
+}
+
+.markdown-preview pre code span.token.operator,
+.markdown-preview pre code .operator {
+  color: #f8d57e !important;   /* light amber */
+}
+
+.markdown-preview pre code span.token.keyword,
+.markdown-preview pre code .keyword {
+  color: #9cc3ff !important;   /* brighter blue */
+}
+
+.markdown-preview pre code span.token.string,
+.markdown-preview pre code .string {
+  color: #b4ffda !important;   /* bright mint */
+}
+
+.markdown-preview pre code span.token.number,
+.markdown-preview pre code .number {
+  color: #ffd2a6 !important;   /* peach */
+}
+
+.markdown-preview pre code span.token.comment,
+.markdown-preview pre code .comment {
+  color: #7a8fa3 !important;   /* soft grey */
+}
+
+/* --- MAKE BOLD TEXT VISIBLE --- */
+.markdown-preview strong,
+.markdown-preview b {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+</style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="advent-of-dev---day-6-30th-nov-2025">Advent of Dev - Day 6 (30th Nov 2025) </h1>
+<hr>
+<p><a href="https://www.reddit.com/r/programmingmemes/comments/1p9117b/same_same_but_different/">Here</a> is your daily dose of memes (This one is unfortunately not from me) (btw requesting insta team to put up more memez on the page :))</p>
+<p>Since a few people might've missed the <a href="">music</a> from the Day 3 solution, <a href="https://www.youtube.com/watch?v=bv__9O5CZok">here</a> is that.</p>
+<p><a href="https://open.spotify.com/track/3GVNp2UgIp2TN3ra67cxdg?si=aed56392e9bf4da2">Here</a> is the song of the day :)</p>
+<hr>
+<h2 id="rules-of-the-game">Rules of the game </h2>
+<p>1) Use of any AI or web resources is prohibited (with the exception of <a href="https://progclubiitm.com/newsletter_2/">resources</a> provided in the problem).<br>
+2) Running problem code, or any variation of it that gives away the answer before submission is unacceptable.<br>
+3) You are free to use both of the above after making a submission in the google form.<br>
+4) Please do not discuss anything on the group, it gives away the answers more often than not. Generally the information given will be enough, but in case you feel it isn't, reach out to that day's problem setter on DM.<br>
+5) DO NOT disturb the setter by asking them the answer after submitting your response. Let everyone enjoy their winter vacations.<br>
+7) We cannot ensure these rules are followed by everyone for obvious reasons, but all of us are here to learn, so please respect the opportunity and follow the rules honestly to get the best out of our collective effort.<br>
+8) You can continue to ignore rule 6. You'll find out what it is soon :)</p>
+<p>Problem Setter: <a href="https://docs.google.com/document/d/1AKO6WuRhZQZKvaXdq0KaEK938gqFH72_7c13IKgtzFA/edit?usp=sharing">ScepticallySam</a></p>
+<hr>
+<h2 id="summary-of-the-score">Summary of the score </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Total -&gt;		3 points
+---------------------------------
+Attempting -&gt; 		1 point
+Q1 Answer -&gt; 		0.25 points
+Q1 Explanation -&gt; 	0.5 points
+Q2 (a) -&gt;               0.25 points
+Q2 (b) -&gt; 	        0.25 points
+Q3 Answer -&gt; 		0.25 points
+Q3 Explanation -&gt; 	0.5 points
+</code></pre><hr>
+<p>Today let's explore a few rather basic stuff which are overlooked upon.</p>
+<h2 id="static"><code>static</code> </h2>
+<p><code>static</code> is a keyword that has multiple different use cases. Let's look at each of them</p>
+<h3 id="static-inside-a-function"><code>static</code> inside a function </h3>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-int">int</span> <span class="token function">counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    x<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// returns 1</span>
+    <span class="token function">counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// returns 2</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>Initialized once</li>
+<li>Value persists across calls</li>
+<li>Lives for the entire program</li>
+<li>But scope is still local to that function</li>
+</ul>
+<h3 id="static-global-variables"><code>static</code> global variables </h3>
+<ul>
+<li>Usually a vairable defined in the global scope is visible across files.</li>
+<li>This could potentailly cause naming issues across files!!</li>
+<li>To avoid this, we use the keyword <code>static</code></li>
+</ul>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword keyword-using">using</span> <span class="token keyword keyword-namespace">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// avaiable for external linkage</span>
+<span class="token keyword keyword-static">static</span> <span class="token keyword keyword-int">int</span> y <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// not avaiable for external linkage</span>
+</code></pre><p>Here, external linkage refers to the usage of the keyword <code>extern</code> which is used to "find" the variable across the global scopes of other files.</p>
+<p>An Overview:</p>
+<ul>
+<li>Global <code>static</code> variables have <strong>internal linkage</strong> -&gt; visible only in this translation unit (file).</li>
+<li>Normal globals have <strong>external linkage</strong> -&gt; visible across multiple files via <code>extern</code>.</li>
+</ul>
+<h3 id="static-class-attributes"><code>static</code> class attributes </h3>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">A</span><span class="token punctuation">{</span>
+<span class="token keyword keyword-public">public</span><span class="token operator">:</span>
+    <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-int">int</span> hehe<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-int">int</span> A<span class="token double-colon punctuation">::</span>hehe <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// this is necessary, else we face a *linker* error</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    A<span class="token double-colon punctuation">::</span>hehe <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">// valid access</span>
+    A a<span class="token punctuation">;</span>
+    a<span class="token punctuation">.</span>hehe <span class="token operator">=</span> <span class="token number">15</span><span class="token punctuation">;</span> <span class="token comment">// also a valid access</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>These are attributes of a class/struct that are of type <code>static &lt;type&gt;</code>.</li>
+<li>These attributes have to be initialised in the global scope, otherwise we would face <strong>linked errors</strong>.</li>
+</ul>
+<h3 id="static-class-methods"><code>static</code> class methods </h3>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
+<span class="token keyword keyword-public">public</span><span class="token operator">:</span>
+    <span class="token keyword keyword-int">int</span> attr<span class="token punctuation">;</span>
+    <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-int">int</span> <span class="token function">calc</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// this-&gt;attr = 0; // error!!</span>
+        <span class="token keyword keyword-return">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    A a<span class="token punctuation">;</span>
+    <span class="token class-name">A</span><span class="token double-colon punctuation">::</span><span class="token function">calc</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// valid</span>
+    a<span class="token punctuation">.</span><span class="token function">calc</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>attr<span class="token punctuation">,</span>a<span class="token punctuation">.</span>attr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// also valid</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>Does not have a <code>this</code> pointer</li>
+<li>Can be called without an object using <code>&lt;class_name&gt;::&lt;static_function_name&gt;(param_list)</code></li>
+<li>Cannot access non-static members, can be seen as consequence of not have access to a <code>this pointer</code>. I hope you guys see why it does no make sense to let it use a <code>this</code> pointer.</li>
+</ul>
+<h2 id="namespace"><code>namespace</code> </h2>
+<p>You all would definitely have using the statement <code>using namespace std;</code> but do you know what that actually means?</p>
+<p>First lets explore what a <code>namespace</code> is.</p>
+<p>A namespace in C++ is simply a named scope that groups together identifiers (variables, functions, types, templates) to prevent name collisions and control lookup.</p>
+<p>There are multiple other features on top of namespaces, but this fundamental idea does not change.</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword keyword-namespace">namespace</span> let_that <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> <span class="token function">sink_in</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>a <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"let that sink in :)\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword keyword-return">return</span> sinks<span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">":(\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword keyword-return">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-int">int</span> sinks<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    let_that<span class="token double-colon punctuation">::</span>sinks<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-int">int</span> k <span class="token operator">=</span> let_that<span class="token double-colon punctuation">::</span><span class="token function">sink_in</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Please do note that the order of definition inside the namespace matters.</p>
+<p>Having the array <code>sinks</code> after the function would result in a compilation error.</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-namespace">namespace</span> game <span class="token punctuation">{</span> <span class="token keyword keyword-void">void</span> <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+<span class="token comment">// Much later, or in another file:</span>
+<span class="token keyword keyword-namespace">namespace</span> game <span class="token punctuation">{</span> <span class="token keyword keyword-void">void</span> <span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre><p>Both the game namespaces above would refer to the same namespace.</p>
+<p>Namespaces are open and can be extended at any point of the file or even in different files.</p>
+<p>The namespace std is extended in every standard library you include.</p>
+<h3 id="argument-dependent-lookup-adl">Argument Dependent Lookup (ADL) </h3>
+<p>ADL says that if a function is called with an argument of type <code>T</code>, search <code>T</code>’s namespace for matching functions.</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword keyword-namespace">namespace</span> N <span class="token punctuation">{</span>
+    <span class="token keyword keyword-struct">struct</span> <span class="token class-name">A</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-void">void</span> <span class="token function">f</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span> <span class="token punctuation">{</span> std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"N::f\n"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    N<span class="token double-colon punctuation">::</span>A a<span class="token punctuation">;</span>
+    <span class="token function">f</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// ADL finds N::f even without "using namespace N"</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Don't worry we'll come to <code>using</code> soon :)</p>
+<h3 id="anonymous-namespace">Anonymous Namespace </h3>
+<p>This basically gives the same effect as the <code>static</code> keyword for internal linkages.</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword keyword-namespace">namespace</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> helo <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>helo<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// prints 0 as expected</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="nesting-namespaces">Nesting namespaces </h3>
+<p>Namespaces can be nested :)</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-namespace">namespace</span> A <span class="token punctuation">{</span>
+    <span class="token keyword keyword-namespace">namespace</span> B <span class="token punctuation">{</span>
+        <span class="token keyword keyword-int">int</span> helo<span class="token punctuation">;</span> <span class="token comment">// accessed as A::B::helo</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="inline-namespaces">Inline namespaces </h3>
+<p>This feature gives us the notion of versioning</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword keyword-namespace">namespace</span> A <span class="token punctuation">{</span>
+    <span class="token keyword keyword-namespace">namespace</span> v1 <span class="token punctuation">{</span>
+        <span class="token keyword keyword-int">int</span> helo <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-namespace">namespace</span> v2 <span class="token punctuation">{</span>
+        <span class="token keyword keyword-int">int</span> helo <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-inline">inline</span> <span class="token keyword keyword-namespace">namespace</span> v3 <span class="token punctuation">{</span>
+        <span class="token keyword keyword-int">int</span> helo <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>A<span class="token double-colon punctuation">::</span>helo<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// this prints A::v3::helo</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Fun fact: If I have contradicting inlines, basically same identifier in two inlined namespaces of the same namespace, you would expect an error, but you would not have an error till you access this ambiguous value.</p>
+<h2 id="using"><code>using</code> </h2>
+<p>Time to address the elephant(?? maybe ig) in the room.</p>
+<p>I'm sure this is the keyword most people just blindly use without know what it even does.</p>
+<p>So let's look at an example ;)</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword keyword-using">using</span> <span class="token keyword keyword-namespace">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"hehe\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>As we all would know, with the <code>using namespace std;</code>, this file will not compile.</p>
+<p>After our (newly gained??) knowledge of namespaces this <code>using</code> term would make more sense.</p>
+<p>So basically the <code>using namespace std;</code> just tells the compiler, "For the rest of this scope, if you see an unqualified name, also look inside this namespace."</p>
+<p>A few common misconceptions:</p>
+<ol>
+<li><code>using namespace X;</code> does not bring any symbols into the scope. It simply adds another place for unqualified lookups.</li>
+<li>It applies only to the current scope.</li>
+</ol>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-void">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-using">using</span> <span class="token keyword keyword-namespace">namespace</span> std<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"foo\n"</span><span class="token punctuation">;</span> <span class="token comment">// works</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"hello\n"</span><span class="token punctuation">;</span> <span class="token comment">// invalid, causes an error</span>
+<span class="token punctuation">}</span>
+</code></pre><ol start="3">
+<li>It can cause name conflicts, say two namespaces you included have <code>foo</code>. If I am "using" both the namespaces then an unqualified <code>foo</code> would be ambiguous.</li>
+<li><code>using namespace X;</code> causes name pollution, you might recieve names that you will not be using in your program. There is a fix to this which will be dicussed after this.</li>
+<li>Be careful while using this in header files, rather try avoiding it all together. Since headers are included in multiple places, this can cause issues.</li>
+<li><code>using namespace std;</code> puts every name in std into the lookup set, which slows ADL-heavy code.</li>
+</ol>
+<p>There is one more use case for the keyword <code>using</code>. You can use it as follows</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword keyword-using">using</span> std<span class="token double-colon punctuation">::</span>cout<span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> n<span class="token punctuation">;</span>
+    cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span> <span class="token comment">// will still cause issues</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello World!"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token comment">// works fine</span>
+<span class="token punctuation">}</span>
+</code></pre><p>You can use specific identifiers from a namespace as shown above.</p>
+<p>This reduces name pollution significantly.</p>
+<p><s>Now you can start naming your variables max, min and all</s> :)</p>
+<h2 id="const"><code>const</code> </h2>
+<p>In my last AoD, we saw <code>constexpr</code> and <code>consteval</code>.</p>
+<p>Now we see a more commonly used keyword from the same family called <code>const</code>.</p>
+<p><code>const</code> does <strong>not</strong> make the underlying object immutable.<br>
+It only prevents modification <em>through that expression</em>.<br>
+Other references/pointers may still modify it.</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-const">const</span> <span class="token keyword keyword-int">int</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token operator">&amp;</span>x<span class="token punctuation">;</span>
+    x <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">// this is fine</span>
+    <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">// this is not fine, will cause compilation error.</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="const-on-pointers"><code>const</code> on pointers </h3>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-int">int</span><span class="token operator">*</span> p<span class="token punctuation">;</span> <span class="token comment">// pointer to an int</span>
+<span class="token keyword keyword-const">const</span> <span class="token keyword keyword-int">int</span><span class="token operator">*</span> p<span class="token punctuation">;</span> <span class="token comment">/*(or)*/</span> <span class="token keyword keyword-int">int</span> <span class="token keyword keyword-const">const</span><span class="token operator">*</span> p<span class="token punctuation">;</span> <span class="token comment">// pointer to a const int</span>
+<span class="token keyword keyword-int">int</span><span class="token operator">*</span> <span class="token keyword keyword-const">const</span> p <span class="token comment">// constant pointer to an int</span>
+<span class="token keyword keyword-const">const</span> <span class="token keyword keyword-int">int</span><span class="token operator">*</span> <span class="token keyword keyword-const">const</span> p <span class="token comment">// constant pointer to a const int</span>
+</code></pre><h3 id="const-in-methodsfunctions"><code>const</code> in methods/functions </h3>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-const">const</span> T <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment">// function returns a type const T</span>
+T <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-const">const</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment">// this is only applicable for non static methods</span>
+                 <span class="token comment">// no attribute of the object is supposed to change</span>
+                 <span class="token comment">// with the exception of mutable attributes.</span>
+</code></pre><h3 id="const-family-of-keywords"><code>const</code> family of keywords </h3>
+<p><code>const</code> -&gt; value can't be changed through the related name</p>
+<p><code>constexpr</code> -&gt; can be evaluated at compile time (slightly different for functions and variables but yea we know :))</p>
+<p><code>consteval</code> -&gt; function has to be evaluated at compile time</p>
+<p><code>constinit</code> -&gt; New guy in the AoD town. Must be initialised in compile time, but may become a runtime constant later. You can read about it but we won't be focusing on it.</p>
+<p>Now here's the questions</p>
+<p>Send your answers through <a href="https://forms.gle/TqaYa9sfzPRKT7fv6">this form</a></p>
+<p>(Q1) 0.25 + 0.5</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"f called\n"</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> <span class="token number">100</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-namespace">namespace</span> A <span class="token punctuation">{</span>
+    <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-namespace">namespace</span> B <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-int">int</span> y <span class="token operator">=</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token class-name">B</span><span class="token double-colon punctuation">::</span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> A<span class="token double-colon punctuation">::</span>x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> A<span class="token double-colon punctuation">::</span>x <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> B<span class="token double-colon punctuation">::</span>y <span class="token operator">&lt;&lt;</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>(a) Will the given program compile or not? If it does, What's the output.<br>
+(b) Give reasoning for your answer.</p>
+<p>(Q2) 0.25 + 0.25<br>
+(a) What all attributes of a function do you think can be accessed by a static function.<br>
+(b) Give a reason as to why static functions should not have access to the this pointer.</p>
+<p>(Q3) <a href="https://www.reddit.com/r/ShingekiNoKyojin/comments/kgr73y/what_was_his_name_again/">0.25</a> + 0.5</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cassert&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;expected&gt;</span></span>
+
+<span class="token keyword keyword-using">using</span> std<span class="token double-colon punctuation">::</span>cout<span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> std<span class="token double-colon punctuation">::</span>expected<span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> std<span class="token double-colon punctuation">::</span>unexpected<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-namespace">namespace</span> A<span class="token punctuation">{</span>
+    <span class="token keyword keyword-namespace">namespace</span> v1<span class="token punctuation">{</span>
+        <span class="token keyword keyword-int">int</span> counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-inline">inline</span> <span class="token keyword keyword-namespace">namespace</span> v2<span class="token punctuation">{</span>
+        <span class="token keyword keyword-int">int</span> counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+expected<span class="token operator">&lt;</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span><span class="token keyword keyword-int">int</span><span class="token operator">&gt;</span> <span class="token function">old_div_fn</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    A<span class="token double-colon punctuation">::</span>v1<span class="token double-colon punctuation">::</span>counter<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>b <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span> A<span class="token double-colon punctuation">::</span>v1<span class="token double-colon punctuation">::</span>counter<span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> a<span class="token operator">/</span>b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+expected<span class="token operator">&lt;</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span><span class="token keyword keyword-int">int</span><span class="token operator">&gt;</span> <span class="token function">div_fn</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    A<span class="token double-colon punctuation">::</span>counter<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-auto">auto</span> val <span class="token operator">=</span> <span class="token function">old_div_fn</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>val <span class="token operator">&amp;&amp;</span> b <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> <span class="token operator">*</span>val<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> <span class="token operator">*</span>val <span class="token operator">-</span> A<span class="token double-colon punctuation">::</span>counter<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> <span class="token function">unexpected</span><span class="token punctuation">(</span>val<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> A<span class="token double-colon punctuation">::</span>counter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-auto">auto</span> result <span class="token operator">=</span> <span class="token function">div_fn</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Bertolt "</span> <span class="token operator">&lt;&lt;</span> result<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Bertholdt "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>result <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    result <span class="token operator">=</span> <span class="token function">old_div_fn</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Burrito "</span> <span class="token operator">&lt;&lt;</span> result<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Boruto "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>result <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    result <span class="token operator">=</span> <span class="token function">div_fn</span><span class="token punctuation">(</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Burntoast "</span> <span class="token operator">&lt;&lt;</span> result<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Bee Swarm Simulator "</span><span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>result <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>(a) Will the given program compile or not? If it does, What's the output.<br>
+(b) Give reasoning for your answer.</p>
+<p>Hint: If you do not know <code>std::expected</code>, firstly <em>sad ScepticallySam noises</em>. Secondly there's an easter egg in this document that'll take you to my documentation of <code>std::expected</code>.</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

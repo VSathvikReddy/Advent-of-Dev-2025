@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pimpl.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="advent-of-dev---day-12-9th-dec-2025">Advent of Dev - Day 12 (9th Dec 2025)</h1>
+<h2 id="items-of-the-day">Items of the Day</h2>
+<p>Here is your daily dose of humor : <a href="https://www.reddit.com/r/gamermemes/comments/1llltrc/you_know_there_is_never_enough_saves/">Meme</a></p>
+<p>Here's one of my favorite <a href="https://open.spotify.com/track/5In8B6Om5OKrhwBMB4tXSi?si=f3498714d2c64763">songs</a>!</p>
+<h2 id="rules-of-the-game">Rules of the game</h2>
+<ol>
+<li>Use of any AI or web resources is prohibited (with the exception of resources provided in the problem).</li>
+<li>Running problem code, or any variation of it that gives away the answer before submission is unacceptable.</li>
+<li>You are free to use both of the above after making a submission in the google form.</li>
+<li>Please do not discuss anything on the group, it gives away the answers more often than not. Generally the information given will be enough, but in case you feel it isn't, reach out to that day's problem setter on DM.</li>
+<li>DO NOT disturb the setter by asking them the answer after submitting your response. Let everyone enjoy their winter vacations.</li>
+<li>We cannot ensure these rules are followed by everyone for obvious reasons, but all of us are here to learn, so please respect the opportunity and follow the rules honestly to get the best out of our collective effort.</li>
+</ol>
+<p>Problem Setter : Suraj</p>
+<h2 id="summary-of-the-score">Summary of the score</h2>
+<pre class="hljs"><code><div>Total -&gt;		3 points
+--------------------------------
+Attempting -&gt; 		1 point
+Q1 Explanation -&gt; 	0.5 point
+Q2 Explanation -&gt; 	0.5 point
+Q3 Explanation -&gt; 	1 point
+</div></code></pre>
+<p>Submission Link : <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZyTvt9WcXQSt-LwvUWn91qrMRZ39ozkc6cw1e6aQZ923B1A/viewform?usp=dialog">GForms</a></p>
+<h2 id="pimpl---pointer-to-implementation">PImpl - Pointer To Implementation</h2>
+<h3 id="the-problem">The Problem</h3>
+<p>Say we are building a Renderer for a Game Engine. This class needs to talk to the GPU using API's like DirectX or Vulkan. Abstracting away the details, one would write it something like this. The issue lies in the fact that we are forced to include the massive headers for these API's.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Renderer.hpp </span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> once</span>
+<span class="hljs-comment">// We are forced to include these massive headers here</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vulkan/vulkan.h&gt; </span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;d3d12.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Renderer</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">drawFrame</span><span class="hljs-params">()</span></span>;
+<span class="hljs-keyword">private</span>:
+    VkInstance vulkanInstance;      <span class="hljs-comment">// Vulkan type</span>
+    ID3D12Device* dxDevice;         <span class="hljs-comment">// DirectX type</span>
+};
+</div></code></pre>
+<h3 id="the-consequences">The Consequences?</h3>
+<ul>
+<li>
+<p><strong>Dependency Pollution:</strong> Any file that includes <code>#include &quot;Renderer.hpp&quot;</code> inadvertently pulls in thousands of lines of Vulkan and DirectX code. This causes namespace pollution and macro conflicts.</p>
+</li>
+<li>
+<p><strong>Increased Compilation Time:</strong> If you add/modify a private member in the <code>Renderer.hpp</code>, the timestamp of <code>Renderer.hpp</code> changes. Thus every single file that includes it must be recompiled and hence the compilation time increases <em>exponentially</em>.</p>
+</li>
+<li>
+<p><strong>ABI Instability</strong> : If you ship this engine as a DLL, changing the size of <code>Renderer.hpp</code> breaks the binary compatability. The user must recompile their game code to match the new object size.</p>
+</li>
+</ul>
+<h3 id="the-solution">The Solution</h3>
+<p>Like Wheeler quoted &quot;Any problem in computer science can be solved with another layer of indirection&quot;, we add an indirection to the <code>Renderer.hpp</code></p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> once</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt; </span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Renderer</span> {</span>
+<span class="hljs-keyword">public</span>:
+    Renderer();
+    ~Renderer(); <span class="hljs-comment">// Declaration only</span>
+
+    <span class="hljs-comment">// Move semantics, PImpl is move-only by default</span>
+    Renderer(Renderer&amp;&amp;) <span class="hljs-keyword">noexcept</span>;
+    Renderer&amp; <span class="hljs-keyword">operator</span>=(Renderer&amp;&amp;) <span class="hljs-keyword">noexcept</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">drawFrame</span><span class="hljs-params">()</span></span>;
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// Forward declaration</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">EngineInternal</span>;</span> 
+
+    <span class="hljs-comment">// The Opaque pointer which has a fixed size</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;EngineInternal&gt; m_pImpl;
+};
+</div></code></pre>
+<p>All the dirty details lie in <code>Renderer.cpp</code></p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"Renderer.hpp"</span></span>
+
+<span class="hljs-comment">// Heavy dependencies are isolated to this one Translation Unit</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vulkan/vulkan.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;d3d12.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-comment">// The Actual Definition</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Renderer</span>:</span>:EngineInternal {
+    VkInstance vulkanInstance;
+    ID3D12Device* dxDevice;
+    
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backendDraw</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// ... some logic to interact with the gpu</span>
+    }
+};
+
+<span class="hljs-comment">// Lifecycle Implementation </span>
+
+<span class="hljs-comment">// Constructor, allocates the implementation on the heap</span>
+Renderer::Renderer() 
+    : m_pImpl(<span class="hljs-built_in">std</span>::make_unique&lt;EngineInternal&gt;()) {}
+
+<span class="hljs-comment">// Destructor, defined here, where EngineInternal is fully defined</span>
+Renderer::~Renderer() = <span class="hljs-keyword">default</span>;
+
+<span class="hljs-comment">// Move Operations</span>
+Renderer::Renderer(Renderer&amp;&amp;) <span class="hljs-keyword">noexcept</span> = <span class="hljs-keyword">default</span>;
+Renderer&amp; Renderer::<span class="hljs-keyword">operator</span>=(Renderer&amp;&amp;) <span class="hljs-keyword">noexcept</span> = <span class="hljs-keyword">default</span>;
+
+<span class="hljs-comment">// Interface Forwarding</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Renderer::drawFrame</span><span class="hljs-params">()</span> </span>{
+    m_pImpl-&gt;backendDraw();
+}
+</div></code></pre>
+<h3 id="why-does-it-work">Why does it work?</h3>
+<p>To understand why this works, we must look at the C++ build process</p>
+<ol>
+<li>
+<p><strong>Memory layout and offsets</strong></p>
+<ul>
+<li>When the compiler compiles a client file, it needs to know how much memory to allocate for Renderer
+<ul>
+<li>Without PImpl, Size = sizeof(VkInstance) + sizeof(ID3D12Device*) + .... If implementation changes, size changes.</li>
+<li>With PImpl, Size = sizeof(std::unique_ptr), a constant.</li>
+</ul>
+</li>
+<li>Because the size is a constant, the memory layout of the <code>Renderer</code> (ideally) never changes, even if you rewrite the entire rendering backend.</li>
+</ul>
+</li>
+<li>
+<p><strong>The Build System</strong></p>
+<ul>
+<li>Say some other file, here <code>LevelEditor.cpp</code> uses <code>Renderer.hpp</code>, <code>Renderer.cpp</code> + <code>vulkan.h</code> becomes one huge translation unit, <code>LevelEdtor.cpp</code> and <code>Renderer.hpp</code> become another translation unit. They are &quot;separate&quot; entities.</li>
+<li>Now let's just say for the sake of argument, we modify Renderer.cpp to optimize the <code>backendDraw()</code>. <code>Renderer.cpp</code> gets a new timestamp, the build system recompiles the <code>Renderer.cpp</code> into <code>Renderer.o</code> and thus the header <code>Renderer.hpp</code> is untouched, this means that the <code>LevelEditor.cpp</code> is never recompiled due to its timestamp being not modified.</li>
+<li>The linker simply links the new <code>Renderer.o</code> and the existing <code>LevelEditor.o</code>.</li>
+</ul>
+</li>
+</ol>
+<h2 id="question-1--destructive-capabilities">Question 1 : Destructive Capabilities</h2>
+<p>What would happen if we define the destructor for the <em>PImpl</em> class in the header? Will it compile? Answer briefly.</p>
+<h2 id="question-2--the-rule-of-five">Question 2 : The Rule of Five</h2>
+<p>If you use <code>std::unique_ptr</code> for the <em>PImpl</em>, what happens if you try to copy an instance of the class without writing a custom copy constructor?</p>
+<h2 id="question-3--a-leap-of-faith">Question 3 : A Leap of faith</h2>
+<p>This code will cause compilation error, identify all lines which can cause compilation error.</p>
+<ul>
+<li>
+<p>DataProcessor.hpp</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> once</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DataProcessor</span> {</span>
+<span class="hljs-keyword">public</span>:
+    DataProcessor();
+    ~DataProcessor(); 
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; input)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getProcessedCount</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Impl</span>;</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Impl&gt; m_pImpl;
+};
+</div></code></pre>
+</li>
+<li>
+<p>DataProcessor.cpp</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"DataProcessor.hpp"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt; </span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">DataProcessor</span>:</span>:Impl {
+    <span class="hljs-keyword">int</span> executionCount = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> lastError;
+    
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">runCoreLogic</span><span class="hljs-params">()</span> </span>{ 
+        executionCount++; 
+    }
+};
+
+DataProcessor::DataProcessor() : m_pImpl(<span class="hljs-built_in">std</span>::make_unique&lt;Impl&gt;()) {}
+DataProcessor::~DataProcessor() = <span class="hljs-keyword">default</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">DataProcessor::process</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; input)</span> </span>{
+    m_pImpl-&gt;runCoreLogic();
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">DataProcessor::getProcessedCount</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+    m_pImpl-&gt;executionCount++; 
+    <span class="hljs-keyword">return</span> m_pImpl-&gt;executionCount;
+}
+</div></code></pre>
+</li>
+<li>
+<p>main.cpp</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"DataProcessor.hpp"</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    DataProcessor dp1;
+    dp1.process(<span class="hljs-string">"data"</span>);
+    
+    DataProcessor dp2 = <span class="hljs-built_in">std</span>::move(dp1); 
+    DataProcessor dp3 = dp2;            
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+</li>
+</ul>
+
+</body>
+</html>

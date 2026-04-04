@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>callbacks.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<hr>
+<h1 id="advent-of-dev---day-2-26th-nov-2025">Advent of Dev - Day 2 (26th Nov 2025)</h1>
+<h2 id="items-of-the-day">Items of the Day</h2>
+<p>Here is your daily dose of humor: <a href="https://www.reddit.com/r/programmingmemes/comments/1p15oj6/so_who_is_sending_patches_now/#lightbox">Meme</a></p>
+<h2 id="rules-of-the-game">Rules of the game</h2>
+<ol>
+<li>Use of any AI or web resources is prohibited (with the exception of resources provided in the problem).</li>
+<li>Running problem code, or any variation of it that gives away the answer before submission is unacceptable.</li>
+<li>You are free to use both of the above after making a submission in the google form.</li>
+<li>Please do not discuss anything on the group, it gives away the answers more often than not. Generally the information given will be enough, but in case you feel it isn't, reach out to that day's problem setter on DM.</li>
+<li>DO NOT disturb the setter by asking them the answer after submitting your response. Let everyone enjoy their winter vacations.</li>
+<li>We cannot ensure these rules are followed by everyone for obvious reasons, but all of us are here to learn, so please respect the opportunity and follow the rules honestly to get the best out of our collective effort.</li>
+</ol>
+<p>Problem Setter : Suraj</p>
+<h2 id="summary-of-the-score">Summary of the score</h2>
+<pre class="hljs"><code><div>Total -&gt;		3 points
+---------------------------------
+Attempting -&gt; 		1 point
+Q1 Answer -&gt; 		0.5 point
+Q1 Explanation -&gt; 	0.5 point
+Q2 Answer -&gt; 		0.5 point
+Q2 Explanation -&gt; 	0.5 point
+</div></code></pre>
+<p>Submission Link : <a href="https://docs.google.com/forms/d/e/1FAIpQLSc6RRMFbwzhUHsEX8_iWYgZ_e2z0078LsbT27EADPr8CJIivA/viewform?usp=publish-editor">GForms</a></p>
+<h2 id="callbacks-in-c">Callbacks in C++</h2>
+<p>A <strong>callback</strong> is a function you pass to another function so that it can &quot;call it back&quot; at a later time.</p>
+<p>Think of it like leaving your phone number at a busy restaurant and you say - &quot;Call me back when the table is available.&quot;</p>
+<ul>
+<li><strong>Your phone number</strong> = The Callback Function</li>
+<li><strong>The Restaurant</strong> = The function doing the work (e.g., downloading, processing)</li>
+<li><strong>The Call</strong> = Invoking the callback</li>
+</ul>
+<p>Callbacks allow for customizable behavior, asynchronous programming (GUI, networking, authentication), and a clean separation between &quot;doing the work&quot; and &quot;what to do after the work is done.&quot;</p>
+<h2 id="a-world-without-callbacks">A world without Callbacks</h2>
+<p>Without callbacks, a function that performs a task <strong>cannot know</strong> what the caller wants to do afterward. We are forced to either <strong>poll</strong> repeatedly (blocking the program / spawning a separate thread which polls continuously) or <strong>hard-code</strong> behavior in the function preforming the work.</p>
+<p>Consider a <code>Downloader</code> class. Without callbacks, we might write:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Downloader</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">download</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; url)</span> </span>{
+        <span class="hljs-comment">// ... Some code which downloads stuff from url and stores in some buffer string ...</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> data = bufferString; 
+      
+        <span class="hljs-comment">// In the downloader, we are hard-coding the functionality to print the data. </span>
+        <span class="hljs-comment">// What if the caller wanted to upload the data to a server instead? </span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"The downloaded data is : "</span> &lt;&lt; data &lt;&lt; <span class="hljs-string">"\n"</span>; 
+    }
+};
+</div></code></pre>
+<p>This is <em>tight coupling</em>. The <code>Downloader</code> ideally shouldn't care what happens to the data, it should only care about retrieving it.</p>
+<h2 id="the-evolution-of-c-callbacks">The Evolution of C++ Callbacks</h2>
+<p>C++ provides multiple ways to implement this pattern, ranging from the C-style semantics to Modern C++ idioms.</p>
+<h3 id="1-function-pointers-the-c-style">1. Function Pointers (The C Style)</h3>
+<p>Fast and lightweight, but cannot (easily) capture variables from the outside scope and cannot easily bind to object member functions.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Global function, but we need to make serverUrl a global field, server a global "object" to get this working</span>
+<span class="hljs-comment">// They have no business being globals :(</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">upload</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> data)</span> </span>{
+    server.post(serverUrl, data);
+}
+
+downloader.download(downloadUrl, upload);
+</div></code></pre>
+<h3 id="2-functors-the-object-oriented-style">2. Functors (The Object-Oriented Style)</h3>
+<p>A class that overloads <code>operator()</code>. It can hold state (member variables), but it is a pain to write.</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Uploader</span> {</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> serverUrl;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> data)</span> <span class="hljs-keyword">const</span> </span>{ 
+        <span class="hljs-comment">// ... Some code which connects to the server, </span>
+        <span class="hljs-comment">// assume all the functions and fields used below are well defined</span>
+        server.post(serverUrl, data);
+    }
+};
+<span class="hljs-comment">// This struct is passed as an object to the processing function and then call the overloaded ()</span>
+Uploader uploadObj{serverUrl};
+downloader.download(downloadUrl, uploadObj);
+</div></code></pre>
+<h3 id="3-lambdas-our-good-c-friend">3. Lambdas (Our good C++ friend)</h3>
+<p>Inline, anonymous functions introduced in C++ 11. They are essentially syntactic sugar for Functors but much more readable.</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> serverUrl;
+
+<span class="hljs-comment">// We capture 'serverUrl' from the local scope to use inside the callback</span>
+downloader.download(downloadUrl, [serverUrl](<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> data) {
+    server.post(serverUrl, data);
+});
+</div></code></pre>
+<h3 id="4-stdfunction-the-modern-way">4. <code>std::function</code> (The modern way)</h3>
+<p>The do-it-all of callbacks. It can store a lambda, a function pointer, or a functor. It is very flexible but comes with a slight performance overhead due to <a href="https://medium.com/@sonudgr82013/understanding-type-erasure-idiom-in-c-bca2374956ac">type erasure</a> and potential dynamic allocation.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">download</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> url, <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span>(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>)&gt; onFinish)</span> </span>{
+    <span class="hljs-comment">// ... Some code which downloads stuff from url and stores in some buffer string ...</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> data = bufferString; 
+
+    onFinish(data);
+}
+</div></code></pre>
+<h2 id="question-1--captures-captures-captures">Question 1 : Captures Captures Captures</h2>
+<p>Lambdas can capture variables from their surrounding scope. However, how they modify those captures depends on the keywords used, here <a href="https://www.geeksforgeeks.org/cpp/c-mutable-keyword/">mutable</a></p>
+<p>Predict the output of the following code.</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span>()&gt; cb)</span> </span>{ 
+    cb(); 
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>;
+
+    run([=]() <span class="hljs-keyword">mutable</span> {
+        x += <span class="hljs-number">5</span>;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">" "</span>;
+    });
+
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+}
+</div></code></pre>
+<pre class="hljs"><code><div>Options
+--------------------------
+(A) 15 15
+(B) 10 10
+(C) 15 10
+(D) Compilation Error
+(E) 10 15
+</div></code></pre>
+<p>Explain your choice ^_^</p>
+<h2 id="question-2--360-no-scope">Question 2 : 360 no-scope</h2>
+<p>Capturing variables by reference <code>[&amp;]</code> is powerful, but it requires careful attention to the scope and lifetime of variables. It is easy to accidentally refer to a variable that is shadowed or no longer exists.</p>
+<p>Consider the following scenario where we store a callback for later use.</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span>
+
+<span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span>()&gt; globalCb;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">registerCallback</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span>()&gt; f)</span> </span>{ 
+    globalCb = f; 
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">4</span>;
+
+    registerCallback([&amp;](){ 
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="hljs-string">" "</span>; 
+    });
+
+    {
+        <span class="hljs-keyword">int</span> a = <span class="hljs-number">99</span>; 
+        globalCb();
+    }
+}
+</div></code></pre>
+<p>What is the output?</p>
+<pre class="hljs"><code><div>Options
+--------------------------
+(A) 4
+(B) 99
+(C) Undefined Behavior
+(D) Compilation Error 
+</div></code></pre>
+<p>Explain your reasoning ^_____^</p>
+<hr>
+<p><em>Happy Coding!!</em></p>
+
+</body>
+</html>

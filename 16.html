@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>crtp.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="advent-of-dev---day-16-17-dec-2025">Advent of Dev - Day 16 (17 Dec 2025)</h1>
+<h2 id="items-of-the-day">Items of the Day</h2>
+<p>Some <a href="https://www.reddit.com/r/ProgrammerHumor/comments/1p24o79/evenmoreexpandedversion/?tl=en">meme</a> I found funny!</p>
+<p>Some nice <a href="https://open.spotify.com/track/5p7ujcrUXASCNwRaWNHR1C?si=2b552593ddc64dbf">melody</a>!</p>
+<h2 id="rules-of-the-game">Rules of the game</h2>
+<ol>
+<li>Use of any AI or web resources is prohibited (with the exception of resources provided in the problem).</li>
+<li>Running problem code, or any variation of it that gives away the answer before submission is unacceptable.</li>
+<li>You are free to use both of the above after making a submission in the google form.</li>
+<li>Please do not discuss anything on the group, it gives away the answers more often than not. Generally the information given will be enough, but in case you feel it isn't, reach out to that day's problem setter on DM.</li>
+<li>DO NOT disturb the setter by asking them the answer after submitting your response. Let everyone enjoy their winter vacations.</li>
+<li>We cannot ensure these rules are followed by everyone for obvious reasons, but all of us are here to learn, so please respect the opportunity and follow the rules honestly to get the best out of our collective effort.</li>
+</ol>
+<p>Problem Setter : Suraj</p>
+<h2 id="summary-of-the-score">Summary of the score</h2>
+<pre class="hljs"><code><div>Total -&gt;		3 points
+--------------------------------
+Attempting -&gt; 		1 point
+Q1 Explanation -&gt; 	0.5 point
+Q2 Explanation -&gt; 	1 point
+Q3 Explanation -&gt; 	0.5 point
+</div></code></pre>
+<p>Submission Link : <a href="https://docs.google.com/forms/d/e/1FAIpQLSfO0KBOd_vtml8g2cvL_1EKRjphx6On2v9NpiQhedw7Eske-A/viewform?usp=dialog">GForms</a></p>
+<h2 id="curiously-recurring-template-pattern---crtp">Curiously Recurring Template Pattern - CRTP</h2>
+<h3 id="introduction">Introduction</h3>
+<p>In C++, <em>Polymorphism</em> usually refers to <em>virtual</em> functions. While conveniant, they often incur runtime costs which can be significant in extremely low latency systems, drivers and my favorite - game engines. To understand what CRTP is, let's take an example of an ImageProcessor interface.</p>
+<p>This example was generated by ChatGPT so if you find any inconsistencies, please do DM me. I've made sure that the example is correct and accuately depicts the concept but there might be some mistakes!</p>
+<p>Without CRTP you would write the code something like this</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IImageProcessor</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* pixels, <span class="hljs-keyword">int</span> size)</span> </span>= <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">virtual</span> ~IImageProcessor() = <span class="hljs-keyword">default</span>; 
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SepiaFilter</span> :</span> <span class="hljs-keyword">public</span> IImageProcessor {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* pixels, <span class="hljs-keyword">int</span> size)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-comment">// Implementation for Sepia</span>
+    }
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GrayscaleFilter</span> :</span> <span class="hljs-keyword">public</span> IImageProcessor {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* pixels, <span class="hljs-keyword">int</span> size)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-comment">// Implementation for Grayscale</span>
+    }
+};
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">applyFilter</span><span class="hljs-params">(IImageProcessor* processor, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* data, <span class="hljs-keyword">int</span> len)</span> </span>{
+    processor-&gt;process(data, len); 
+}
+</div></code></pre>
+<p>The costs we pay :</p>
+<ul>
+<li>
+<p>VTable lookup : When <code>processor-&gt;process()</code> is called, the CPU must fetch the object's vptr, look up the function address in the vtable, and then jump to that address</p>
+</li>
+<li>
+<p>Instruction Cache Misses : Because the destination is unknown until runtime, the CPU struggles to <em>pre-fetch</em> instructions.</p>
+</li>
+<li>
+<p>No Inlining : The compiler cannot inline <code>process()</code> because it doesn't know which version will be called. For small functions like getters/setters, this overhead is massive.</p>
+</li>
+</ul>
+<h3 id="the-solution">The Solution</h3>
+<p>Enforce static polymorphism via CRTP. Instead of base class being generic, the base class depends on the derived class via templates.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Derived&gt;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StaticImageProcessor</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* pixels, <span class="hljs-keyword">int</span> size)</span> </span>{
+        <span class="hljs-comment">// We cast 'this' to the Derived type in compile time to access its methods.</span>
+        <span class="hljs-keyword">static_cast</span>&lt;Derived*&gt;(<span class="hljs-keyword">this</span>)-&gt;processImpl(pixels, size);
+    }
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SepiaFilter</span> :</span> <span class="hljs-keyword">public</span> StaticImageProcessor&lt;SepiaFilter&gt; {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">processImpl</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* pixels, <span class="hljs-keyword">int</span> size)</span> </span>{
+        <span class="hljs-comment">// Implementation for Sepia</span>
+    }
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GrayscaleFilter</span> :</span> <span class="hljs-keyword">public</span> StaticImageProcessor&lt;GrayscaleFilter&gt; {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">processImpl</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* pixels, <span class="hljs-keyword">int</span> size)</span> </span>{
+        <span class="hljs-comment">// Implementation for Grayscale</span>
+    }
+};
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">applyFilter</span><span class="hljs-params">(StaticImageProcessor&lt;T&gt;&amp; processor, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* data, <span class="hljs-keyword">int</span> len)</span> </span>{
+    <span class="hljs-comment">// Compiler sees processor.process -&gt; static_cast -&gt; T::processImpl</span>
+    <span class="hljs-comment">// It can inline the whole chain.</span>
+    processor.process(data, len);
+}
+</div></code></pre>
+<h3 id="but-why-is-this-working">But why is this working??</h3>
+<p>The optimization pattern relies upon the formula</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span> :</span> <span class="hljs-keyword">public</span> Base&lt;Derived&gt;
+</div></code></pre>
+<p>Inside <code>Base&lt;Derived&gt;</code>, the <code>this</code> pointer is physically of the type <code>Base*</code> but we know for a fact that the object was instansiated as <code>Derived</code>. Thus <code>static_cast&lt;Derived*&gt;(this)</code> is safe.</p>
+<p>Now as the compiler knows what <code>T</code> is at compile time, the compiler can perform all the fancy optimizations it wants to while compiling the program.</p>
+<p>Some of the perf improvements we observe are :</p>
+<ul>
+<li>
+<p>The compiler generates code that is identical to manually calling the function on the derived object. The <em>Interface</em> wrapper vanishes during compilation.</p>
+</li>
+<li>
+<p>Direct inlining : Due to <code>T</code> being known at compile time</p>
+</li>
+<li>
+<p>Smaller objects : No vptr is stored in the class, this saves 8 bytes on a 64 bit system per class where CRTP is used.</p>
+</li>
+</ul>
+<h3 id="trade-offs">Trade offs</h3>
+<ul>
+<li>
+<p><strong>No heterogenous containers</strong> : You cannot have something like <code>std::vector&lt;StaticImageProcessor*&gt;</code>. Because <code>StaticImageProcessor&lt;Sepia&gt;</code> and <code>StaticImageProcessor&lt;Grayscale&gt;</code> are totally different types, they cannot share a container without a common base.</p>
+</li>
+<li>
+<p><strong>Code bloating</strong> : <code>applyFilter&lt;SepiaFilter&gt;</code> and <code>applyFilter&lt;GrayscaleFilter&gt;</code> generate two separate copies of the function in the binary. Virtual functions would use just one function.</p>
+</li>
+</ul>
+<h3 id="more-resources">More resources</h3>
+<ul>
+<li>
+<p>This short <a href="https://www.youtube.com/watch?v=Srx4eiBdpdQ">youtube</a> video is excellent in describing the CRTP idiom!!</p>
+</li>
+<li>
+<p>This <a href="https://stackoverflow.com/a/4173298/24895383">stackoverflow blog</a> and the <a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">wiki</a> page (although the wiki page might be a bit overwhelming) are also extremely good!</p>
+</li>
+</ul>
+<h2 id="question-1--getting-a-bit-curious">Question 1 : Getting a bit curious</h2>
+<p>Going off on a tangent, if we can't use heterogenous containers, why use CRTP at all?? Think about why inheritance is a core principle in software!</p>
+<h2 id="question-2--quirks-of-inheritance">Question 2 : Quirks of inheritance</h2>
+<p>Consider the following C++ code. What will happen once this code is compiled and run(if it compiles successfully).</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Derived&gt;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">interface</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">static_cast</span>&lt;Derived*&gt;(<span class="hljs-keyword">this</span>)-&gt;implementation();
+    }
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span> :</span> <span class="hljs-keyword">public</span> Base&lt;Derived&gt; {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">implementation</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// ... heavy work</span>
+    }
+    ~Derived() { 
+        <span class="hljs-comment">// critical cleanup</span>
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+    Base&lt;Derived&gt;* p = <span class="hljs-keyword">new</span> Derived();
+    p-&gt;interface();
+    <span class="hljs-keyword">delete</span> p;
+}
+</div></code></pre>
+<pre class="hljs"><code><div>Options
+--------------------------
+(A) Compilation error
+(B) Undefined behaviour
+(C) Runs successfully and performs what it is intended to do
+</div></code></pre>
+<h2 id="question-3--the-birds-nest">Question 3 : The bird's nest</h2>
+<p>What is the output of this code.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">A</span> {</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">static_cast</span>&lt;T*&gt;(<span class="hljs-keyword">this</span>)-&gt;bar(); } };
+<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">B</span> :</span> A&lt;B&lt;T&gt;&gt; { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">static_cast</span>&lt;T*&gt;(<span class="hljs-keyword">this</span>)-&gt;baz(); } };
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">C</span> :</span> B&lt;C&gt; { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">baz</span><span class="hljs-params">()</span> </span>{ <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"C"</span>; } };
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    C c;
+    c.foo();
+}
+</div></code></pre>
+<pre class="hljs"><code><div>Options
+--------------------------
+(A) Compilation error
+(B) Runtime error, stack overflow
+(C) Prints C to the console
+</div></code></pre>
+
+</body>
+</html>

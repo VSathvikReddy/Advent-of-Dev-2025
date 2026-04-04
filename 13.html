@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advent of Dev - Day 13</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #ffffff;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #ffffff;
+            margin-top: 30px;
+        }
+        
+        a {
+            color: #4da6ff;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        pre {
+            background-color: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        
+        code {
+            background-color: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        ol, ul {
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Advent of Dev - Day 13 (10th Dec 2025)</h1>
+    
+    <h2>Items of the Day</h2>
+    <p>Let us cook! <a href="https://www.reddit.com/r/ProgrammerHumor/comments/1p5wv58/wrongversion/#lightbox">Meme</a></p>
+    <p>A song by AURORA (my latest obsession :)) <a href="https://www.youtube.com/watch?v=06ht9MyJLT4">Running with the Wolves</a></p>
+    
+    <h2>Rules of the game</h2>
+    <ol>
+        <li>Use of any AI or web resources is prohibited (with the exception of resources provided in the problem).</li>
+        <li>Please do not discuss anything on the group, it gives away the answers more often than not. Generally the information given will be enough, but in case you feel it isn't, reach out to that day's problem setter on DM.</li>
+        <li>DO NOT disturb the setter by asking them the answer after submitting your response. Let everyone enjoy their winter vacations.</li>
+        <li>We cannot ensure these rules are followed by everyone for obvious reasons, but all of us are here to learn, so please respect the opportunity and follow the rules honestly to get the best out of our collective effort.</li>
+    </ol>
+    
+    <p>Problem Setter : Yoogi</p>
+    
+    <h2>Summary of the score</h2>
+    <pre>Total ->        3 points
+-------------------------------------------------------
+Attempting ->         1 point
+Problem 1 ->        0.5 point
+Problem 2 ->        0.5 point
+Problem 3 ->        1 points</pre>
+    
+    <p>Submission Link : <a href="https://forms.gle/3DnTPsGyfamWkYuN6">GForm</a></p>
+    
+    <p>Create a pdf with your code/pseudocode for each problem, followed by a short explanation</p>
+    
+    <p>Unfortunately guys, I am not a cpp buff (╥﹏╥), so today's problem will focus less on the features of cpp, and more on a pretty interesting concept of programming.</p>
+    
+    <h2>Tail Recursion</h2>
+    <p>Consider a recursive function that calculates the factorial of a number, modulo 1e9+7.</p>
+    
+    <pre><code>def factorial(n):
+    if n == 0:
+        return 1
+    return (n * factorial(n - 1))%1000000007</code></pre>
+    
+    <p>Try calling factorial(5). Works, right? How about factorial(100)? Still works? Try factorial(998). Still works?? I didn't think so. This is because python has a stack limit of 999, and when you do factorial(998) the stack will try to extend till 1000.</p>
+    
+    <p>Now, let's try rewriting the function a little bit.</p>
+    
+    <pre><code>def factorial_but_better(n, acc):
+    if n==0:
+        return acc
+    return factorial_but_better(n-1, (n*acc)%1000000007)</code></pre>
+    
+    <p>First, understand what is going on, and convince yourself that factorial_but_better(n,1) does the same thing as factorial(n). Now, try calling factorial_but_better(998, 1). It doesn't work? No shit, python is stupid. Try writing the same code in cpp. Note that cpp doesn't set a limit on recursive calls, but instead sets a limit on the size of the stack, so to get a segfault on the factorial function, you may have to go until factorial(700000) or so. Use binary search to find the limit.</p>
+    
+    <p>So what's going on?</p>
+    
+    <p>To see what the difference is, look at what each function saves on the stack, and what computation is left to do after the recursive call. "factorial" has to do a multiplication and a modulo after the call, but "factorial_but_better" has nothing left to do!.</p>
+    
+    <p>This is what we call tail recursion. A tail recursive function, simply put, is a function that does not have any more computation to do after any recursive call. Why does this help us?</p>
+    
+    <h2>Tail Call Optimization</h2>
+    <p>When you have a tail recursive function, there is no computation to do after the recursive call. This implies that after the recursive call, the stack frame of the caller function is completely useless. Most modern compilers take advantage of this fact, and reuse the same frame for the next recursive call. This is called Tail Call Optimization.</p>
+    
+    <p>This allows the compiler to complete the entire recursion in a single stack frame. You may be familiar with how most recursive functions have an iterative counterpart that runs faster. TCO is the compiler optimization that converts a tail recursive call to its iterative counterpart.</p>
+    
+    <p>To understand the recursion to iteration concept better, think about how you would go about converting a recursive function to an iterative function. Specifically think about how you would do it for a non tail recursive function and for a tail recursive function. You will notice that converting a tail recursive function to a loop is trivial, and converting a non tail recursive function to a tail recursive function is basically the same as loopifying it.</p>
+    
+    <p>If you are still wondering, python didn't improve with tail recursion because the python interpreter does not support tail call optimization.</p>
+    
+    <h2>Problem 1</h2>
+    <p>Write a tail recursive version of the binary exponentiation function. The python code for the naive version is provided.</p>
+    
+    <pre><code>def binexp(n, a): # perform n^a
+    if(a==0):
+        return 1
+    x = binexp(n, a//2)
+    if(a%2==0):
+        return (x*x)%1000000007
+    else:
+        return (((x*x)%1000000007)*n)%1000000007</code></pre>
+    
+    <h2>Problem 2</h2>
+    <p>Write a tail recursive version of a function that calculates the nth Fibonacci number</p>
+    
+    <pre><code>def fib(n):
+    if(n==0 or n==1):
+        return n
+    else 
+        return fib(n-1) + fib(n-2)</code></pre>
+    
+    <h2>Problem 3</h2>
+    <p>Write(at least try) a tail recursive version of the <a href="https://en.wikipedia.org/wiki/Ackermann_function#Definition:_as_m-ary_function">Ackermann function</a></p>
+    
+    <pre><code>def ack(m,n):
+    if(m==0):
+        return n+1
+    if(n==0):
+        return ack(m-1,1)
+    return ack(m-1,ack(m,n-1))</code></pre>
+
+    <p> If you are struggling, that's probably because the Ackermann function is not primitive recursive, meaning, it cannot be computed by a computer program whose loops are all for loops. If you want the proof, search it up. 
+    
+    <h2>Continuation Passing Style</h2>
+    <p>CPS is a very interesting style of coding, primarily seen in functional programming, where all functions are pure, have no side effects, and whose only purpose is to calculate a result value and return it. The core idea is that control is passed explicitly in the form of a continuation.</p>
+    
+    <p>All functions take in an extra argument, the continuation. When the function computes its result value, it returns it by calling the continuation function with this value as the argument.</p>
+    
+    <p>It can get a little tricky to implement in cpp, so for all the remaining problems, a pseudo-code answer in style of the example below will be permitted.</p>
+    
+    <pre><code>def factorial_CPS(n, k : int->_):
+    if(n==0):
+        k(1)
+    else:
+        factorial_CPS (n-1, (r => k(n*r)))</code></pre>
+    
+    <p>The above is an example of the factorial function using CPS. Read <code>k : int->int</code> as k, a function that takes an integer and returns whatever it wants. Read <code>(r => k(n*r))</code> a function that takes a value r as parameter, and performs <code>k(n*r)</code>. To call the function we would pass the identity function as the second argument initially.</p>
+    
+    <p>In C++ you would need to use lambdas and function pointers to implement this.</p>
+    
+    <p>To understand why this function works, try dry-running <code>factorial_CPS(3, (r => f(r))))</code>.<br>
+    This function would then call <code>factorial_CPS(2, (r => f(3*r)))</code>.<br>
+    This would in turn call <code>factorial_CPS(1, (r => f(2*3*r)))</code>.<br>
+    This would in turn call <code>factorial_CPS(0, (r => f(1*2*3*r)</code>.<br>
+    This would in turn call <code>f(1*2*3*1)</code>.<br>
+    In this way, the factorial has been calculated, and the continuation, which must have been encoded in <code>f</code>, will be called with the factorial as its argument.</p>
+    
+    <p>Spend some time in understanding this by trying to write other recursive functions in CPS, and then return to Problem 3, the Ackermann function.</p>
+</body>
+</html>

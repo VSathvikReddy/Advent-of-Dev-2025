@@ -1,0 +1,479 @@
+<!DOCTYPE html><html><head>
+      <title>AoD_day3</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\reube\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+<style>
+/* ---------- Dark theme (override) ---------- */
+html, body {
+  background: #0b1117 !important; /* page background */
+  color: #dbe9ff !important;      /* main text color */
+}
+
+/* links */
+html body a { color: #7fb7ff !important; }
+
+/* containers */
+html body[for=html-export] .markdown-preview {
+  left: 0 !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 2em !important;
+  width: auto !important;
+  max-width: 1000px !important;   /* change if you want wider/narrower content */
+}
+
+/* make code blocks dark and readable */
+.markdown-preview pre,
+.markdown-preview code,
+.markdown-preview pre>code {
+  background: #07121a !important;
+  color: #dbe9ff !important;
+  /* border: 1px solid #183044 !important; */
+  box-shadow: none !important;
+}
+
+/* inline code */
+html body code { background: #07121a !important; color: #dbe9ff !important; }
+
+/* blockquote */
+.markdown-preview blockquote {
+  background: #061722 !important;
+  color: #c7e6ff !important;
+  border-left-color: #135e82 !important;
+}
+
+/* tables */
+.markdown-preview table th,
+.markdown-preview table td {
+  border-color: #183044 !important;
+  color: #e6f3ff !important;
+}
+
+/* line numbers (if shown) */
+.markdown-preview pre.line-numbers .line-numbers-rows>span:before {
+  color: #6ea7d6 !important;
+}
+
+/* reduce contrast on sidebar if visible */
+.md-sidebar-toc {
+  background: rgba(0,0,0,0.06) !important;
+}
+
+/* ensure headings remain visible */
+.markdown-preview h1, .markdown-preview h2, .markdown-preview h3 {
+  color: #ffffff !important;
+}
+</style>
+<style>
+/* Make the markdown content full-width and responsive */
+html body[for=html-export] .markdown-preview {
+  position: relative !important;
+  left: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 2em !important;   /* adjust if you want more/less margin */
+  box-sizing: border-box !important;
+}
+
+/* Allow the entire page to stretch */
+html, body {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+</style>
+<style>
+/* Full page responsive width */
+html body[for=html-export] .markdown-preview {
+  position: relative !important;
+  left: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 2em !important;
+  box-sizing: border-box !important;
+}
+
+/* Global font */
+html, body {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #0b1117 !important; /* keep your dark theme */
+  color: #dbe9ff !important;
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  line-height: 1.6 !important;
+}
+
+/* Headings look better with semibold weight */
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+}
+
+/* Inline code */
+.markdown-preview code {
+  font-family: "Fira Code", "JetBrains Mono", "Consolas", monospace !important;
+  background: #07121a !important;
+  color: #dbe9ff !important;
+  padding: 2px 4px !important;
+  border-radius: 4px;
+}
+
+/* Code blocks */
+.markdown-preview pre,
+.markdown-preview pre > code {
+  font-family: "Fira Code", "JetBrains Mono", "Consolas", monospace !important;
+  background: #07121a !important;
+  color: #dbe9ff !important;
+  /* border: 1px solid #183044 !important; */
+  /* border-radius: 8px; */
+  /* padding: 1em !important; */
+  overflow-x: auto !important;
+}
+
+/* Blockquotes */
+.markdown-preview blockquote {
+  background: #061722 !important;
+  border-left: 4px solid #135e82 !important;
+  color: #c7e6ff !important;
+  padding: 0.8em 1em !important;
+  border-radius: 4px;
+}
+</style>
+<style>
+/* Code blocks (whole block has padding, lines do NOT) */
+.markdown-preview pre {
+  background: #07121a !important;
+  color: #dbe9ff !important;
+  border: 1px solid #183044 !important;
+  border-radius: 8px !important;
+  padding: 1em !important;         /* <-- padding around whole block */
+  overflow-x: auto !important;
+  margin: 1.2em 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Remove padding inside <pre><code> so lines don't have padding */
+.markdown-preview pre code {
+  background: none !important;     /* remove inner background */
+  padding: 0 !important;           /* <-- remove line-level padding */
+  margin: 0 !important;
+  border: none !important;
+  display: block !important;
+  font-family: "Fira Code", "JetBrains Mono", Consolas, monospace !important;
+  color: inherit !important;
+}
+
+/* Inline code (still padded) */
+.markdown-preview code:not(pre code) {
+  background: #07121a !important;
+  padding: 2px 4px !important;
+  border-radius: 4px !important;
+  font-family: "Fira Code", "JetBrains Mono", Consolas, monospace !important;
+}
+</style>
+<style>
+/* Make markdown --- lines thin and subtle */
+.markdown-preview hr {
+  border: none !important;
+  border-top: 1px solid #2a3a44 !important;  /* soft grey-blue */
+  margin: 1.5em 0 !important;
+  height: 0 !important;
+}
+</style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="advent-of-dev---day-3-27th-nov-2025">Advent of Dev - Day 3 (27th Nov 2025) </h1>
+<hr>
+<p><a href="https://imgflip.com/i/9u6hlk">Here</a> is your daily dose of memes :)</p>
+<hr>
+<h2 id="rules-of-the-game">Rules of the game </h2>
+<p>1) Use of any AI or web resources is prohibited (with the exception of resources provided in the problem).<br>
+2) Running problem code, or any variation of it that gives away the answer before submission is unacceptable.<br>
+3) You are free to use both of the above after making a submission in the google form.<br>
+4) Please do not discuss anything on the group, it gives away the answers more often than not. Generally the information given will be enough, but in case you feel it isn't, reach out to that day's problem setter on DM.<br>
+5) DO NOT disturb the setter by asking them the answer after submitting your response. Let everyone enjoy their winter vacations.<br>
+7) We cannot ensure these rules are followed by everyone for obvious reasons, but all of us are here to learn, so please respect the opportunity and follow the rules honestly to get the best out of our collective effort.<br>
+8) You can ignore Rule 6</p>
+<p>Problem Setter: <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0">ScepticallySam</a></p>
+<hr>
+<h2 id="summary-of-the-score">Summary of the score </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Total -&gt;		3 points
+---------------------------------
+Attempting -&gt; 		1 point
+Q1 Answer -&gt; 		0.25 points
+Q1 Explanation -&gt; 	0.25 points
+Q2 Answer -&gt; 		0.25 points
+Q2 Explanation -&gt; 	0.25 points
+Q3 Answer -&gt; 		0.25 points
+Q3 Explanation -&gt; 	0.25 points
+Q4 Answer -&gt; 		0.25 points
+Q4 Explanation -&gt; 	0.25 points
+</code></pre><h2 id="compiler-optimizations">Compiler optimizations </h2>
+<p>A compiler optimization is a transformation performed by the compiler to make your program faster, smaller, or more efficient, without changing its observable behavior.</p>
+<p>In practice, the compiler may:</p>
+<ul>
+<li>
+<p>eliminate unnecessary computations (constant folding, dead-code elimination)</p>
+</li>
+<li>
+<p>replace expressions with their precomputed values (constant propagation)</p>
+</li>
+<li>
+<p>remove or merge temporary objects</p>
+</li>
+<li>
+<p>inline small functions</p>
+</li>
+<li>
+<p>unroll or reorder loops</p>
+</li>
+<li>
+<p>reorder instructions for better CPU performance</p>
+</li>
+<li>
+<p>optimize away entire blocks of code proven redundant</p>
+</li>
+</ul>
+<p>We will now look at one such mechanism that helps shift work from runtime to compile time and reduce overhead: <code>constexpr</code>.</p>
+<h2 id="constexpr"><code>constexpr</code> </h2>
+<p>This is a keyword introduced in C++ 11 which allows certain expressions, variables, and functions to be evaluated at compile-time rather than at run time.</p>
+<p>Programming using <code>constexpr</code> is usually called Compile-time programming for this very reason.</p>
+<p>At its core, <code>constexpr</code> tells the compiler, "This value or function <em>may</em> be evaluated at compile time if all its inputs are known at compile time."</p>
+<p>This keyword doesn't force compile-time evaluation, it simply just permits it. Hence it need not always happen.</p>
+<h3 id="why-constexpr-exists">Why <code>constexpr</code> exists </h3>
+<p>Many values in a program are naturally constant. Examples:</p>
+<ul>
+<li>
+<p>mathematical calculations</p>
+</li>
+<li>
+<p>precomputed lookup tables</p>
+</li>
+<li>
+<p>fixed algorithmic results (say, factorial(10))</p>
+</li>
+<li>
+<p>configuration constants</p>
+</li>
+<li>
+<p>operations on literal data</p>
+</li>
+</ul>
+<p>Before <code>constexpr</code>, such compile-time computations required macros, template metaprogramming, or manual precomputation. Modern C++ provides a clean, safe, expressive way to compute these values automatically at compile time.</p>
+<h3 id="where-can-constexpr-be-used">Where can <code>constexpr</code> be used? </h3>
+<h4 id="constexpr-variables"><code>constexpr</code> variables </h4>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> y <span class="token operator">=</span> a<span class="token punctuation">;</span> <span class="token comment">// here a must be a compile-time constant else it'll throw an error</span>
+</code></pre><p>A <code>constexpr</code> variable must be initialised using a compile-time constant expression.</p>
+<p>If any value which is not a constant expression is used, it'll throw an error.</p>
+<hr>
+<p>Another useful construct to learn in compile-time programming is <code>static_assert(bool)</code>.</p>
+<p>Throws an error if the value inside is false and throws a different error if the expression inside contains a value which is not a compile-time constant.</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> y <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token function">assert</span><span class="token punctuation">(</span>x <span class="token operator">==</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// works fine, rather would only be evaluated during run time</span>
+<span class="token keyword keyword-static_assert">static_assert</span><span class="token punctuation">(</span>x <span class="token operator">==</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// throws error during the compilation phase</span>
+</code></pre><hr>
+<h4 id="constexpr-functions"><code>constexpr</code> functions </h4>
+<p>A <code>constexpr</code> function is a function that would be computed during compilation if</p>
+<ol>
+<li>The arguments are compile-time constants.</li>
+<li>The function must be capable of constant evaluation (no side effects on the compile-time path).</li>
+</ol>
+<hr>
+<p>Time for another side track :)</p>
+<p>In programming, a side effect refers to any observable change to the state of a program or its environment that occurs as a result of executing a function or expression, beyond merely returning a value. Essentially, it's an action that a piece of code performs that affects something outside of its immediate scope.</p>
+<p>Examples of side effects include:</p>
+<ul>
+<li>Modifying a non-local variable: Changing the value of a global variable or a variable in an outer scope.</li>
+<li>Performing I/O operations: Reading from or writing to a file, database, network, or console (like print statements).</li>
+<li>Mutating mutable data structures: Modifying an object or array passed by reference.</li>
+</ul>
+<p>There are many other examples of side effects but we won't really concern ourselves with that for now.</p>
+<hr>
+<p>Back to <code>constexpr</code>, look at the following example</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> x<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> a <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// evaluated during compile time</span>
+    <span class="token keyword keyword-int">int</span> b <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// evaluated during runtime</span>
+    <span class="token keyword keyword-int">int</span> n<span class="token punctuation">;</span>
+    cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> c <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// compile time error, a constexpr depends on a non compile-time constant</span>
+    <span class="token keyword keyword-int">int</span> d <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// evaluated during runtime</span>
+<span class="token punctuation">}</span>
+</code></pre><p>A keyword we can use to make sure the function in <strong>only</strong> evaluated during compile time is <code>consteval</code>.</p>
+<p>It is a keyword that was introduced in C++20.</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-consteval">consteval</span> <span class="token keyword keyword-int">int</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> x<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> a <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// evaluated during compile time</span>
+    <span class="token keyword keyword-int">int</span> b <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// IS EVALUATED AT COMPILE TIME NOW!!!</span>
+    <span class="token keyword keyword-int">int</span> n<span class="token punctuation">;</span>
+    cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> c <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// compile time error, a constexpr depends on a non compile-time constant</span>
+    <span class="token keyword keyword-int">int</span> d <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// compile time error</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Note: <code>consteval</code> forces a function call to be evaluated at compile time, so calls like <code>f(2)</code> are evaluated during compilation if <code>2</code> is a constant expression, even when the result is assigned to a runtime variable. By contrast, a <code>constexpr</code> function may be evaluated at compile time, but calls in ordinary runtime contexts (like <code>int b = f(2);</code>) are not required to be, the compiler may choose to evaluate them at runtime.</p>
+<p>In short: <code>consteval</code> mandates compile-time evaluation (when possible), <code>constexpr</code> permits it.</p>
+<hr>
+<p>Another side track</p>
+<p>Till now, you've either just taken my word for something being evaluated during compile time or run time, or you've just been sceptical the entire time.</p>
+<p>Don't worry I've got something for you ;)</p>
+<p>Introducing <code>std::is_constant_evaluated()</code>.</p>
+<p>This construct returns true if it is in compilation phase and returns false if it is in run time phase.</p>
+<p>So lets say we replace our function f to the following for experimental purposes:</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">is_constant_evaluated</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> <span class="token number">2</span><span class="token operator">*</span>x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> a <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// evaluated during compile time</span>
+    <span class="token keyword keyword-int">int</span> b <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// evaluated during runtime</span>
+    <span class="token keyword keyword-int">int</span> n<span class="token punctuation">;</span>
+    cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span> <span class="token comment">// say I input 3</span>
+    <span class="token comment">// constexpr int c = f(n); // compile time error, a constexpr depends on a non compile-time constant</span>
+    <span class="token keyword keyword-int">int</span> d <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// evaluated during runtime</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> a <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> b <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> d <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Output:</p>
+<pre data-role="codeBlock" data-info="diff" class="language-diff diff"><code><span class="token coord">2 2 3</span>
+</code></pre><p>Same thing if I replace the <code>constexpr</code> with <code>consteval</code>, the output is (and comment out the d part):</p>
+<pre data-role="codeBlock" data-info="diff" class="language-diff diff"><code><span class="token coord">2 4</span>
+</code></pre><p>Btw I found this (int b = f(2)'s behaviour, I thought it should've been an error) out as I was making this example at 1:00 am in the night, so messing around and finding out works very well and I highly encourage you to find more interesting behaviour :)</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">is_constant_evaluated</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// The next comment, if uncommented would lead to an error</span>
+        <span class="token comment">// std::cout &lt;&lt; "compile time " &lt;&lt; x &lt;&lt; std::endl; // I/O is not allowed in the compile-time control flow</span>
+        <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"run time "</span> <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span> <span class="token comment">// control flow can never lead to this during compile time so its fine</span>
+    <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h4 id="constexpr-objects"><code>constexpr</code> objects </h4>
+<p>Just a small example for this.</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-struct">struct</span> <span class="token class-name">Point</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token function">Point</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">x</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">y</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-constexpr">constexpr</span> Point <span class="token function">p</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// created at compile time</span>
+</code></pre><p>Please do note that all the explanation above is based on the following compilation scheme:</p>
+<blockquote>
+<p><code>g++ -std=c++20 test.cpp</code></p>
+</blockquote>
+<p>Enabling other optimizations might change the behaviour of the given snippets above but the core concept remains the same :)</p>
+<p>Now here's the questions</p>
+<p>Send your answers through <a href="https://forms.gle/t1fDB4bt4gCSLuVt5">this form</a></p>
+<p>Q1 (0.25 + 0.25)</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">is_constant_evaluated</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> <span class="token number">2</span><span class="token operator">*</span>x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"test"</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-const">const</span> <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> b <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> a <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">*</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-static_assert">static_assert</span><span class="token punctuation">(</span>a <span class="token operator">==</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Q) What will happen when you compile this? Give reasoning.</p>
+<p>Q2 (0.25 + 0.25)</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">is_constant_evaluated</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"test"</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> n <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-const">const</span> <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> n<span class="token punctuation">;</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> b <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> a <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">*</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-static_assert">static_assert</span><span class="token punctuation">(</span>a <span class="token operator">==</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Q) What will happen when you compile this? Give reasoning.</p>
+<p>Q3 (0.25 + 0.25)</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">is_constant_evaluated</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"test"</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> n <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-const">const</span> <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">13</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> a <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-int">int</span> b <span class="token operator">=</span> n <span class="token operator">+</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> a <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> b <span class="token operator">&lt;&lt;</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Q) What is the output? Give reasoning.</p>
+<p>Q4 (0.25 + 0.25)</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-constexpr">constexpr</span> <span class="token keyword keyword-int">int</span> <span class="token function">div</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">/</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-static_assert">static_assert</span><span class="token punctuation">(</span><span class="token function">div</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token keyword keyword-static_assert">static_assert</span><span class="token punctuation">(</span><span class="token function">div</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>
+</code></pre><p>Q) What will happen when you compile this? Give reasoning.</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
