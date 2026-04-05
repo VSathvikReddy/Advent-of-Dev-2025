@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>branchless_programming.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="advent-of-dev---day-17-23rd-dec-2025">Advent of Dev - Day 17 (23rd Dec 2025)</h1>
+<h2 id="items-of-the-day">Items of the Day</h2>
+<p>Some <a href="https://www.reddit.com/r/programmingmemes/comments/1ps27tf/vibe_coded_ai_slop/">meme</a></p>
+<p>Maybe a bit too classic <a href="https://open.spotify.com/track/4umIPjkehX1r7uhmGvXiSV?si=d25c72090acb4402">song</a>!</p>
+<h2 id="rules-of-the-game">Rules of the game</h2>
+<ol>
+<li>Use of any AI or web resources is prohibited (with the exception of resources provided in the problem).</li>
+<li>Running problem code, or any variation of it that gives away the answer before submission is unacceptable.</li>
+<li>You are free to use both of the above after making a submission in the google form.</li>
+<li>Please do not discuss anything on the group, it gives away the answers more often than not. Generally the information given will be enough, but in case you feel it isn't, reach out to that day's problem setter on DM.</li>
+<li>DO NOT disturb the setter by asking them the answer after submitting your response. Let everyone enjoy their winter vacations.</li>
+<li>We cannot ensure these rules are followed by everyone for obvious reasons, but all of us are here to learn, so please respect the opportunity and follow the rules honestly to get the best out of our collective effort.</li>
+</ol>
+<p>Problem Setter : Suraj</p>
+<h2 id="summary-of-the-score">Summary of the score</h2>
+<pre class="hljs"><code><div>Total -&gt;		3 points
+--------------------------------
+Attempting -&gt; 		1 point
+Q1 Explanation -&gt; 	2 point
+</div></code></pre>
+<p>Submission Link : <a href="https://docs.google.com/forms/d/e/1FAIpQLSf3cJ3dpZ3IxMCYvHk7ZPyOKE3OR8V-7qHlaJeC4dSFGkCRAg/viewform?usp=dialog">GForms</a></p>
+<h2 id="branchless-programming-and-cpu-pipeline">Branchless Programming and CPU pipeline</h2>
+<p>As the name suggests, branchless programming means &quot;trying&quot; to eliminate conditional branches in some piece of software. Although the applications of this technique are very <em>niche</em> due to tremendous advancements in branch prediction, it is still used in many cryptographic algorithims to prevent many <a href="https://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>.</p>
+<p>To know why branches in code lead to decrease in performance, we must have a deeper look into how the CPU works.</p>
+<h3 id="deeper-dive-into-the-cpu-can-skip-this-if-you-already-know-stages-of-cpu-pipeline">Deeper dive into the CPU (Can skip this if you already know stages of CPU pipeline)</h3>
+<p>Modern CPU's have the ability to split the processing of a machine instruction into a sequence of independent steps known as stages. Instead of processing one instruction completely before starting the next, the CPU overlaps the execution of multiple instructions. The stages are independently set-up in the <em>CPU pipeline</em> and this technique is known as <em>pipelining</em> in Computer Architecture.</p>
+<p>While the modern CPU has a lot of stages, the fundamental model consists of <strong>5 different stages</strong>. Each stage completes it's work in one clock cycle. They are :</p>
+<ol>
+<li>
+<p><strong>Instruction Fetch (IF) :</strong> The CPU reads the next instruction from the Instruction Cache at the address stored in Program Counter.</p>
+</li>
+<li>
+<p><strong>Instruction Decode (ID) :</strong> The control unit interprets the instruction to determine the machine level operation (e.g. ADD, MUL).</p>
+</li>
+<li>
+<p><strong>Execute (EX) :</strong> The arithmetic logic unit (ALU) performs the actual operation.</p>
+</li>
+<li>
+<p><strong>Memory (MEM) :</strong> If the instruction involves reading from  or writing to RAM executed via instructions like LOAD or STORE, the accesses happen here.</p>
+</li>
+<li>
+<p><strong>Writeback (WB) :</strong> The final result of operation is written back to the CPU register file, updating the <a href="https://en.wikipedia.org/wiki/State_(computer_science)#Program_state">state</a> of the program.</p>
+</li>
+</ol>
+<p>A visual representation of the CPU pipeline</p>
+<pre class="hljs"><code><div>Clk Cycle →
+Instr No 
+↓   
+	1 	2 	3 	4 	5 	6 	7
+1 	IF 	ID 	EX 	MEM WB 		
+2 		IF 	ID 	EX 	MEM WB 	
+3 			IF 	ID 	EX 	MEM WB
+4 				IF 	ID 	EX 	MEM
+5 					IF 	ID 	EX  ...
+</div></code></pre>
+<p>The pipeline works really well if the instructions flow continuously without interruptions. In practice, all pieces of code induce <a href="https://en.wikipedia.org/wiki/Instruction_pipelining#Hazards"><em>hazards</em></a> into the pipeline causing the pipeline to stall, sometimes requiring the flushing of the pipeline.</p>
+<p>Branch prediction induces something called a Control hazard. This means the CPU does not know which instruction to fetch next until the current branch instruction is executed. That is, say instruction 3 was a branch instruction, before the clock cycle 5, we can't fetch instruction 4 as we don't know which branch will be taken up until its evaluated.</p>
+<p>Hence the CPU must <em>guess</em> (predict the branch). If it guesses wrong, it must flush the instructions currently in the IF and ID stage which are redundant and are wasting the clock cycle.</p>
+<p>Now-a-days, branch prediction has gotten extremely good at <em>guessing</em> the next instruction correctly. Many even use <a href="https://en.wikipedia.org/wiki/Branch_predictor#Neural_branch_prediction">hardware level neural network</a> to predict stuff. But obviously all of these things are heuristics and hence there is <em>some</em> need for branchless programming.</p>
+<h3 id="ways-to-do-branchless-programming">Ways to do branchless programming</h3>
+<p>So now that we know the issues with branch prediction, let's look at different ways to do branchless programming.</p>
+<ol>
+<li>
+<p>Boolean multiplier</p>
+<ul>
+<li>Branched way :<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (condition) {
+    x = value_a;
+} <span class="hljs-keyword">else</span> {
+    x = value_b;
+}
+</div></code></pre>
+</li>
+<li>Branchless way :<pre class="hljs"><code><div>x = (value_a * condition) + (value_b * !condition);
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>The lookup table</p>
+<ul>
+<li>Branched way :<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (x == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">10</span>;
+<span class="hljs-keyword">if</span> (x == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">20</span>;
+<span class="hljs-comment">// ...</span>
+</div></code></pre>
+</li>
+<li>Branchless way :<pre class="hljs"><code><div><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> results[] = {<span class="hljs-number">10</span>, <span class="hljs-number">20</span>};
+<span class="hljs-keyword">return</span> results[x]; 
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Two's complement trick :
+In 32-bit integers, if you arithmetic shift a number right by 31 bits <code>(n &gt;&gt; 31)</code>, the result is:</p>
+<ul>
+<li>
+<p>0x00000000 (0) if the number is positive.</p>
+</li>
+<li>
+<p>0xFFFFFFFF (-1 or all 1s binary) if the number is negative.</p>
+</li>
+</ul>
+<p>We can use this &quot;mask&quot; to select data without branching.</p>
+<ol>
+<li>Minimum and Maximum
+<ul>
+<li>Branched way : (For min)<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (x &lt; y) {
+    r = x;
+} <span class="hljs-keyword">else</span> {
+    r = y;
+}
+</div></code></pre>
+</li>
+<li>Branchless way : (For min)<pre class="hljs"><code><div><span class="hljs-comment">// If x &lt; y, then -(x &lt; y) becomes -1 (all 1s). </span>
+<span class="hljs-comment">// If x &gt;= y, it becomes 0.</span>
+<span class="hljs-keyword">int</span> r = y ^ ((x ^ y) &amp; -(x &lt; y));
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>Absolute value :
+<ul>
+<li>Branchless way :<pre class="hljs"><code><div><span class="hljs-keyword">int</span> mask = x &gt;&gt; <span class="hljs-number">31</span>; 
+
+<span class="hljs-comment">// If x is positive: (x + 0) ^ 0 = x</span>
+<span class="hljs-comment">// If x is negative: (x + -1) ^ -1. In 2's complement, this flips the bits and adds 1.</span>
+<span class="hljs-keyword">int</span> abs_x = (x + mask) ^ mask;
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Power of 2</p>
+<ol>
+<li>
+<p>Checking if a number is power of 2</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">bool</span> isPowerOfTwo = (x &gt; <span class="hljs-number">0</span>) &amp;&amp; ((x &amp; (x - <span class="hljs-number">1</span>)) == <span class="hljs-number">0</span>);
+</div></code></pre>
+</li>
+<li>
+<p>Modulo power of 2</p>
+<pre class="hljs"><code><div>x &amp; <span class="hljs-number">15</span>; <span class="hljs-comment">// where 15 is 16 - 1</span>
+</div></code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>Toggling ASCII uppercase and lowercase</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// To Lowercase, force 6th bit to 1</span>
+<span class="hljs-keyword">char</span> c = x | <span class="hljs-number">32</span>; 
+
+<span class="hljs-comment">// To Uppercase, force 6th bit to 0</span>
+<span class="hljs-keyword">char</span> c = x &amp; ~<span class="hljs-number">32</span>;
+
+<span class="hljs-comment">// Toggle Case, flip 6th bit</span>
+<span class="hljs-keyword">char</span> c = x ^ <span class="hljs-number">32</span>;
+</div></code></pre>
+</li>
+</ol>
+<h3 id="questions">Questions</h3>
+<ol>
+<li>Because this topic is more like an info dump and a bit more theoretical, I am not sure how to frame a question. I would suggest you to read the resource <a href="https://en.algorithmica.org/hpc/pipelining/branchless/">here</a>. The blog contains some benchmarks and crunchy numbers which might pique your interest.</li>
+</ol>
+
+</body>
+</html>
